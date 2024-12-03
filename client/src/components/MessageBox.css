@@ -1,0 +1,18 @@
+.message-box {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+  }
+  
+  .own-message {
+    flex-direction: row-reverse;
+  }
+  
+  .message-box .MuiAvatar-root {
+    margin-right: 8px;
+  }
+  
+  .own-message .MuiAvatar-root {
+    margin-left: 8px;
+  }
+  
