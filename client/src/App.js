@@ -6,6 +6,7 @@ import ChatPage from './pages/ChatPage';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SettingsPage from './pages/SettingsPage';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 
 const theme = createTheme({
@@ -28,6 +29,7 @@ const AppRoutes = () => {
       <Route path="/register" element={isAuthenticated ? <Navigate to="/chat" /> : <RegisterPage />} />
       <Route path="/login" element={isAuthenticated ? <Navigate to="/chat" /> : <LoginPage />} />
       <Route path="/chat" element={isAuthenticated ? <ChatPage /> : <Navigate to="/login" />} />
+      <Route path="/settings" element={isAuthenticated ? <SettingsPage /> : <Navigate to="/login" />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
