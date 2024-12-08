@@ -1,5 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Container, Paper, Button, Typography, Box, CircularProgress, Skeleton } from '@mui/material';
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Container,
+  Paper,
+  Button,
+  Grid,
+  CircularProgress,
+  Skeleton,
+} from '@mui/material';
+import SettingsIcon from '@mui/icons-material/Settings';
 import CreateRoom from '../components/CreateRoom';
 import JoinRoom from '../components/JoinRoom';
 import ChatRoom from '../components/ChatRoom';
@@ -27,8 +39,8 @@ const ChatPage = () => {
           setCurrentView('chat');
         }
         setIsLoading(false);
-        
-        // Bileşenlerin render olması için ek süre
+
+        // Simulate rendering delay for smoother transition
         setTimeout(() => {
           setIsRendering(false);
         }, 500);
@@ -63,9 +75,16 @@ const ChatPage = () => {
     setRoomCode('');
   }, []);
 
+  const navigateToSettings = () => {
+    navigate('/settings');
+  };
+
   if (isLoading) {
     return (
-      <Container component="main" maxWidth="sm" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <Container
+        component="main"
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}
+      >
         <CircularProgress />
       </Container>
     );
@@ -73,9 +92,9 @@ const ChatPage = () => {
 
   if (isRendering) {
     return (
-      <Container component="main" maxWidth="sm">
+      <Container component="main">
         <Paper elevation={3} sx={{ padding: 4, mt: 8 }}>
-          <Skeleton variant="text" width="60%" height={40} sx={{ mb: 2 }} />
+          <Skeleton variant="text" width="100%" height={40} sx={{ mb: 2 }} />
           <Skeleton variant="rectangular" height={48} sx={{ mb: 2 }} />
           <Skeleton variant="rectangular" height={48} sx={{ mb: 2 }} />
           <Skeleton variant="rectangular" height={48} />
@@ -85,46 +104,52 @@ const ChatPage = () => {
   }
 
   return (
-    <Container component="main" maxWidth="sm">
+    <Container component="main" maxWidth="md">
+      <AppBar position="static" color="primary">
+        <Toolbar>
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            Sohbet Uygulaması
+          </Typography>
+          <IconButton color="inherit" onClick={navigateToSettings}>
+            <SettingsIcon />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+
       {currentView === 'chat' ? (
-        <Paper elevation={3}>
+        <Paper elevation={3} sx={{ padding: 3, mt: 2 }}>
           <ChatRoom roomCode={roomCode} onExit={handleRoomExit} />
         </Paper>
       ) : (
-        <Paper elevation={3} sx={{ padding: 4, mt: 8 }}>
+        <Paper elevation={3} sx={{ padding: 4, mt: 4 }}>
           {currentView === 'options' && (
-            <Box sx={{ textAlign: 'center' }}>
-              <Typography variant="h5" gutterBottom>
-                Sohbet Uygulamasına Hoş Geldiniz
-              </Typography>
-              <Button
-                variant="contained"
-                color="primary"
-                fullWidth
-                sx={{ mt: 2 }}
-                onClick={() => setCurrentView('create')}
-              >
-                Oda Oluştur
-              </Button>
-              <Button
-                variant="outlined"
-                color="primary"
-                fullWidth
-                sx={{ mt: 2 }}
-                onClick={() => setCurrentView('join')}
-              >
-                Odaya Katıl
-              </Button>
-              <Button
-                variant="text"
-                color="secondary"
-                fullWidth
-                sx={{ mt: 2 }}
-                onClick={handleLogout}
-              >
-                Çıkış Yap
-              </Button>
-            </Box>
+            <Grid container spacing={3} direction="column" alignItems="center">
+              <Grid item xs={12} sm={6} md={4}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  onClick={() => setCurrentView('create')}
+                >
+                  Oda Oluştur
+                </Button>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4}>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  fullWidth
+                  onClick={() => setCurrentView('join')}
+                >
+                  Odaya Katıl
+                </Button>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4}>
+                <Button variant="text" color="secondary" fullWidth onClick={handleLogout}>
+                  Çıkış Yap
+                </Button>
+              </Grid>
+            </Grid>
           )}
           {currentView === 'create' && (
             <CreateRoom onSuccess={handleRoomCreatedOrJoined} onBack={handleBack} />
