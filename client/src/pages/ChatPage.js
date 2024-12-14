@@ -1,24 +1,33 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
-  AppBar,
-  Toolbar,
-  IconButton,
+  Box,
   Typography,
+  IconButton,
   Container,
-  Paper,
-  Button,
-  Grid,
   CircularProgress,
   Skeleton,
+  Paper,
 } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
-import CreateRoom from '../components/CreateRoom';
-import JoinRoom from '../components/JoinRoom';
+import { styled } from '@mui/material/styles';
+import OptionsView from '../components/OptionsView';
 import ChatRoom from '../components/ChatRoom';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import api from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
+import SkeletonView from '../components/SkeletonView';
+
+const GradientHeader = styled(Box)(({ theme }) => ({
+  background: 'linear-gradient(135deg, #6a11cb 0%, #2575fc 100%)',
+  borderBottomLeftRadius: theme.spacing(4),
+  borderBottomRightRadius: theme.spacing(4),
+  padding: theme.spacing(3),
+  color: theme.palette.common.white,
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+}));
 
 const ChatPage = () => {
   const [currentView, setCurrentView] = useState('options');
@@ -39,8 +48,6 @@ const ChatPage = () => {
           setCurrentView('chat');
         }
         setIsLoading(false);
-
-        // Simulate rendering delay for smoother transition
         setTimeout(() => {
           setIsRendering(false);
         }, 500);
@@ -66,10 +73,6 @@ const ChatPage = () => {
     toast.success('Odaya yönlendiriliyorsunuz...');
   };
 
-  const handleBack = () => {
-    setCurrentView('options');
-  };
-
   const handleRoomExit = useCallback(() => {
     setCurrentView('options');
     setRoomCode('');
@@ -93,71 +96,39 @@ const ChatPage = () => {
   if (isRendering) {
     return (
       <Container component="main">
-        <Paper elevation={3} sx={{ padding: 4, mt: 8 }}>
-          <Skeleton variant="text" width="100%" height={40} sx={{ mb: 2 }} />
-          <Skeleton variant="rectangular" height={48} sx={{ mb: 2 }} />
-          <Skeleton variant="rectangular" height={48} sx={{ mb: 2 }} />
-          <Skeleton variant="rectangular" height={48} />
-        </Paper>
+        <SkeletonView />
       </Container>
     );
   }
 
   return (
     <Container component="main" maxWidth="md">
-      <AppBar position="static" color="primary">
-        <Toolbar>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Sohbet Uygulaması
-          </Typography>
-          <IconButton color="inherit" onClick={navigateToSettings}>
-            <SettingsIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+     <Paper
+  elevation={4}
+  sx={{
+    borderRadius: '0px 0px 33px 33px', // Sağ alt ve sol alt köşelere kavis
+    overflow: 'hidden', // Kavisin dışına taşan içerikler için
+  }}
+>
+  <GradientHeader>
+    <Typography variant="h5" fontWeight="bold">
+      Sohbet Uygulaması
+    </Typography>
+    <IconButton color="inherit" onClick={navigateToSettings}>
+      <SettingsIcon fontSize="large" />
+    </IconButton>
+  </GradientHeader>
+</Paper>
 
       {currentView === 'chat' ? (
-        <Paper elevation={3} sx={{ padding: 3, mt: 2 }}>
-          <ChatRoom roomCode={roomCode} onExit={handleRoomExit} />
-        </Paper>
+        <ChatRoom roomCode={roomCode} onExit={handleRoomExit} />
       ) : (
-        <Paper elevation={3} sx={{ padding: 4, mt: 4 }}>
-          {currentView === 'options' && (
-            <Grid container spacing={3} direction="column" alignItems="center">
-              <Grid item xs={12} sm={6} md={4}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  fullWidth
-                  onClick={() => setCurrentView('create')}
-                >
-                  Oda Oluştur
-                </Button>
-              </Grid>
-              <Grid item xs={12} sm={6} md={4}>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  fullWidth
-                  onClick={() => setCurrentView('join')}
-                >
-                  Odaya Katıl
-                </Button>
-              </Grid>
-              <Grid item xs={12} sm={6} md={4}>
-                <Button variant="text" color="secondary" fullWidth onClick={handleLogout}>
-                  Çıkış Yap
-                </Button>
-              </Grid>
-            </Grid>
-          )}
-          {currentView === 'create' && (
-            <CreateRoom onSuccess={handleRoomCreatedOrJoined} onBack={handleBack} />
-          )}
-          {currentView === 'join' && (
-            <JoinRoom onSuccess={handleRoomCreatedOrJoined} onBack={handleBack} />
-          )}
-        </Paper>
+        <OptionsView
+          currentView={currentView}
+          setCurrentView={setCurrentView}
+          onRoomCreatedOrJoined={handleRoomCreatedOrJoined}
+          onLogout={handleLogout}
+        />
       )}
     </Container>
   );
