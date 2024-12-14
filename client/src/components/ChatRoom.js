@@ -235,14 +235,17 @@ const ChatRoom = ({ roomCode, onExit }) => {
       
     }}
   >
-    <AppBar 
+<AppBar 
       position="static" 
       sx={{ 
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', 
         boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
         height: '80px',
         display: 'flex',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        borderRadius: '16px', // Added more pronounced border radius
+        margin: '10px', // Optional: adds some space around the AppBar
+        overflow: 'hidden' // Ensures child elements respect the border radius
       }}
     >
       <Toolbar sx={{ 
@@ -285,6 +288,7 @@ const ChatRoom = ({ roomCode, onExit }) => {
             sx={{ 
               color: 'white',
               borderColor: 'rgba(255,255,255,0.5)',
+              borderRadius: '12px', // Added border radius to the button
               '&:hover': {
                 backgroundColor: 'rgba(255,255,255,0.2)',
                 borderColor: 'white'
