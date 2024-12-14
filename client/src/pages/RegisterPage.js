@@ -5,9 +5,7 @@ import RegisterForm from '../components/RegisterForm';
 const RegisterPage = () => {
   return (
     <Container component="main" >
-      <Paper  sx={{ padding: 4, mt: 8 }}>
         <RegisterForm />
-      </Paper>
     </Container>
   );
 };
