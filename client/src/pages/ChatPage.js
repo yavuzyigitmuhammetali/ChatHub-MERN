@@ -17,9 +17,20 @@ import { toast } from 'react-toastify';
 import api from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
 import SkeletonView from '../components/SkeletonView';
+import { keyframes } from '@mui/system';
+
+// Slide down animation
+const slideDown = keyframes`
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+`;
 
 const GradientHeader = styled(Box)(({ theme }) => ({
-  background: 'linear-gradient(135deg, #6a11cb 0%, #2575fc 100%)',
+  background: 'linear-gradient(135deg, #2575fc 0%, #6a11cb 100%)',
   borderBottomLeftRadius: theme.spacing(4),
   borderBottomRightRadius: theme.spacing(4),
   padding: theme.spacing(3),
@@ -27,6 +38,7 @@ const GradientHeader = styled(Box)(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
+  animation: `${slideDown} 0.5s ease-out`, // Apply the animation
 }));
 
 const ChatPage = () => {
@@ -103,22 +115,22 @@ const ChatPage = () => {
 
   return (
     <Container component="main" maxWidth="md">
-     <Paper
-  elevation={4}
-  sx={{
-    borderRadius: '0px 0px 33px 33px', // Sağ alt ve sol alt köşelere kavis
-    overflow: 'hidden', // Kavisin dışına taşan içerikler için
-  }}
->
-  <GradientHeader>
-    <Typography variant="h5" fontWeight="bold">
-      Sohbet Uygulaması
-    </Typography>
-    <IconButton color="inherit" onClick={navigateToSettings}>
-      <SettingsIcon fontSize="large" />
-    </IconButton>
-  </GradientHeader>
-</Paper>
+      <Paper
+        elevation={4}
+        sx={{
+          borderRadius: '0px 0px 33px 33px', // Sağ alt ve sol alt köşelere kavis
+          overflow: 'hidden', // Kavisin dışına taşan içerikler için
+        }}
+      >
+        <GradientHeader>
+          <Typography variant="h5" fontWeight="bold">
+            Sohbet Uygulaması
+          </Typography>
+          <IconButton color="inherit" onClick={navigateToSettings}>
+            <SettingsIcon fontSize="large" />
+          </IconButton>
+        </GradientHeader>
+      </Paper>
 
       {currentView === 'chat' ? (
         <ChatRoom roomCode={roomCode} onExit={handleRoomExit} />
