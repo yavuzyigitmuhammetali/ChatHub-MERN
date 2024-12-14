@@ -5,7 +5,6 @@ import {
   IconButton,
   Container,
   CircularProgress,
-  Skeleton,
   Paper,
 } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -122,14 +121,16 @@ const ChatPage = () => {
           overflow: 'hidden', // Kavisin dışına taşan içerikler için
         }}
       >
-        <GradientHeader>
-          <Typography variant="h5" fontWeight="bold">
-            Sohbet Uygulaması
-          </Typography>
-          <IconButton color="inherit" onClick={navigateToSettings}>
-            <SettingsIcon fontSize="large" />
-          </IconButton>
-        </GradientHeader>
+        {currentView !== 'chat' && (
+          <GradientHeader>
+            <Typography variant="h5" fontWeight="bold">
+              Sohbet Uygulaması
+            </Typography>
+            <IconButton color="inherit" onClick={navigateToSettings}>
+              <SettingsIcon fontSize="large" />
+            </IconButton>
+          </GradientHeader>
+        )}
       </Paper>
 
       {currentView === 'chat' ? (
