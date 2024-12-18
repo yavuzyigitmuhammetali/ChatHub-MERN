@@ -49,6 +49,7 @@ const LoginForm = () => {
   };
 
   return (
+    
     <Paper 
       elevation={6} 
       sx={{ 
@@ -59,24 +60,43 @@ const LoginForm = () => {
         display: 'flex', 
         flexDirection: 'column', 
         alignItems: 'center',
-        borderRadius: 3,
-        background: 'linear-gradient(145deg, #f0f0f0, #ffffff)',
-        boxShadow: '0 10px 20px rgba(0,0,0,0.1)'
+        borderRadius: 4,
+        background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(240,242,247,0.9) 100%)',
+        backdropFilter: 'blur(10px)',
+        boxShadow: '0 20px 40px rgba(0,0,0,0.12)',
+        position: 'relative',
+        overflow: 'hidden',
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: '6px',
+          background: 'linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)',
+        },
       }}
     >
       <Typography 
         variant="h4" 
         component="h1" 
         sx={{ 
-          mb: 3, 
-          fontWeight: 'bold', 
-          color: 'primary.main',
+          mb: 4,
+          fontWeight: 800,
+          background: 'linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)',
+          backgroundClip: 'text',
+          WebkitBackgroundClip: 'text',
+          color: 'transparent',
           display: 'flex', 
           alignItems: 'center',
-          gap: 2 
+          gap: 2,
+          '& svg': {
+            fontSize: 35,
+            color: '#4776E6'
+          }
         }}
       >
-        <LoginIcon fontSize="large" /> Giriş Yap
+        <LoginIcon /> Giriş Yap
       </Typography>
       
       <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%' }}>
@@ -87,10 +107,20 @@ const LoginForm = () => {
           {...register('username')}
           error={!!errors.username}
           helperText={errors.username?.message}
+          sx={{
+            '& .MuiOutlinedInput-root': {
+              '&:hover fieldset': {
+                borderColor: '#4776E6',
+              },
+              '&.Mui-focused fieldset': {
+                borderColor: '#8E54E9',
+              },
+            },
+          }}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <PersonIcon color="action" />
+                <PersonIcon sx={{ color: '#4776E6' }} />
               </InputAdornment>
             ),
           }}
@@ -104,10 +134,20 @@ const LoginForm = () => {
           {...register('password')}
           error={!!errors.password}
           helperText={errors.password?.message}
+          sx={{
+            '& .MuiOutlinedInput-root': {
+              '&:hover fieldset': {
+                borderColor: '#4776E6',
+              },
+              '&.Mui-focused fieldset': {
+                borderColor: '#8E54E9',
+              },
+            },
+          }}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <LockIcon color="action" />
+                <LockIcon sx={{ color: '#4776E6' }} />
               </InputAdornment>
             ),
             endAdornment: (
@@ -115,6 +155,11 @@ const LoginForm = () => {
                 <IconButton
                   onClick={() => setShowPassword(!showPassword)}
                   edge="end"
+                  sx={{
+                    '&:hover': {
+                      color: '#8E54E9',
+                    },
+                  }}
                 >
                   {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
@@ -127,16 +172,24 @@ const LoginForm = () => {
           type="submit"
           fullWidth
           variant="contained"
-          color="primary"
           disabled={isSubmitting}
           startIcon={<LoginIcon />}
           sx={{ 
-            mt: 3, 
+            mt: 4, 
             mb: 2, 
-            py: 1.5,
+            py: 1.8,
             fontWeight: 'bold',
-            borderRadius: 2,
-            textTransform: 'none'
+            borderRadius: 3,
+            textTransform: 'none',
+            fontSize: '1.1rem',
+            background: 'linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)',
+            boxShadow: '0 4px 15px rgba(71, 118, 230, 0.2)',
+            transition: 'all 0.3s ease',
+            '&:hover': {
+              background: 'linear-gradient(90deg, #4776E6 30%, #8E54E9 90%)',
+              transform: 'translateY(-2px)',
+              boxShadow: '0 6px 20px rgba(71, 118, 230, 0.3)',
+            }
           }}
         >
           Giriş Yap
@@ -145,12 +198,22 @@ const LoginForm = () => {
         <Button
           fullWidth
           variant="outlined"
-          color="secondary"
           startIcon={<RegisterIcon />}
           onClick={() => navigate('/register')}
           sx={{
-            borderRadius: 2,
-            textTransform: 'none'
+            borderRadius: 3,
+            textTransform: 'none',
+            fontSize: '1rem',
+            py: 1.5,
+            borderColor: '#4776E6',
+            color: '#4776E6',
+            transition: 'all 0.3s ease',
+            '&:hover': {
+              borderColor: '#8E54E9',
+              color: '#8E54E9',
+              background: 'rgba(142, 84, 233, 0.05)',
+              transform: 'translateY(-2px)',
+            }
           }}
         >
           Hesabınız yok mu? Kayıt Ol

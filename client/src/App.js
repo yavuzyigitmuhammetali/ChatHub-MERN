@@ -8,7 +8,9 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SettingsPage from './pages/SettingsPage';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
-
+import { AnimatePresence } from "framer-motion";
+import './App.css';
+import { useEffect } from 'react';
 const theme = createTheme({
   palette: {
     primary: {
@@ -20,10 +22,13 @@ const theme = createTheme({
   }
 });
 
+
+
 const AppRoutes = () => {
   const { isAuthenticated } = useAuth();
 
   return (
+    <AnimatePresence mode="wait">
     <Routes>
       <Route path="/" element={<Navigate to={isAuthenticated ? "/chat" : "/login"} />} />
       <Route path="/register" element={isAuthenticated ? <Navigate to="/chat" /> : <RegisterPage />} />
@@ -32,17 +37,20 @@ const AppRoutes = () => {
       <Route path="/settings" element={isAuthenticated ? <SettingsPage /> : <Navigate to="/login" />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
+    </AnimatePresence>
   );
 };
 
 const App = () => {
   return (
+    <div className="background">
     <AuthProvider>
       <ThemeProvider theme={theme}>
         <ToastContainer position="top-right" autoClose={5000} />
         <AppRoutes />
       </ThemeProvider>
     </AuthProvider>
+    </div>
   );
 };
 

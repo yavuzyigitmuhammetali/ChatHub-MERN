@@ -1,3 +1,7 @@
+body, html {
+  overflow: hidden;
+}
+
 .App {
   text-align: center;
 }
@@ -11,6 +15,15 @@
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
+}
+/* styles.css */
+.background {
+  background-image: url('/public/cool-background.png');
+  background-size: cover; /* Resim tüm alanı kaplar */
+  background-position: center; /* Resim ortalanır */
+  background-repeat: no-repeat; /* Resim tekrar etmez */
+  height: 100vh; /* Tüm ekranı kapla */
+  width: 100%;
 }
 
 .App-header {
