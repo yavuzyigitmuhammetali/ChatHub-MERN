@@ -1,5 +1,10 @@
  <h1>Chat Hub MERN</h1>
-  <img src="https://images.prismic.io/loco-blogs/79328284-f97b-489f-924c-eb3b17e34b56_image2.png?auto=compress%2Cformat&rect=0%2C0%2C1999%2C1124&w=3840&fit=max" alt="Chat Hub Logo">
+   <img 
+    src="https://images.prismic.io/loco-blogs/79328284-f97b-489f-924c-eb3b17e34b56_image2.png?auto=compress%2Cformat&rect=0%2C0%2C1999%2C1124&w=3840&fit=max" 
+    alt="Chat Hub Logo" 
+    width="600" 
+    style="display: block; margin: 0 auto; border-radius: 5px;"
+  >
   <p><strong>Chat Hub MERN</strong> is a sleek and user-friendly real-time chat application. Using cutting-edge web technologies, it enables users to create or join rooms and engage in seamless real-time conversations.</p>
 
   <h2>Features</h2>
